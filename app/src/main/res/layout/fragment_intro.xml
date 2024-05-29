@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Intro">
+
+    <TextView
+        android:id="@+id/welcomeIntro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:text="@string/welcome_title"
+        android:textAlignment="center"
+        android:textColor="@color/dark_pink"
+        android:textSize="@dimen/welcomeTextSize"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/extraIntro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:text="@string/welcome_text"
+        android:textAlignment="textStart"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/extraInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoIntro" />
+
+    <ImageView
+        android:id="@+id/logoIntro"
+        android:layout_width="407dp"
+        android:layout_height="314dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeIntro" />
+
+    <ImageView
+        android:id="@+id/nextButtonIntro"
+        android:layout_width="248dp"
+        android:layout_height="112dp"
+        android:src="@drawable/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/extraIntro"
+        app:layout_constraintVertical_bias="0.407" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

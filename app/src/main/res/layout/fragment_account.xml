@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Account">
+
+
+    <ImageView
+        android:id="@+id/backAccount"
+        android:layout_width="73dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/back"
+        app:layout_constraintEnd_toStartOf="@+id/kidAccount"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/kidAccount"
+        android:layout_width="73dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/kid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/exitAccount"
+        android:layout_width="73dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/accountexit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.987"
+        app:layout_constraintStart_toEndOf="@+id/kidAccount"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/infoAccount"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/white"
+        android:padding="20dp"
+        android:text="AD SOYAD MAIL"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/welcomeTextSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kidAccount" />
+
+    <TextView
+        android:id="@+id/extraAccount"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_margin="20dp"
+        android:background="@color/white"
+        android:padding="20dp"
+        android:text="@string/extraInformation3"
+        android:textColor="@color/light_gray"
+        android:textSize="@dimen/extraInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoAccount" />
+
+    <ImageView
+        android:id="@+id/contactAccount"
+        android:layout_width="124dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/contactus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/extraAccount"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/deleteAccount"
+        android:layout_width="124dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/deleteaccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contactAccount" />
+
+    <ImageView
+        android:id="@+id/changeAccount"
+        android:layout_width="35dp"
+        android:layout_height="38dp"
+        android:background="@color/white"
+        android:layout_marginStart="336dp"
+        android:src="@drawable/change"
+        app:layout_constraintEnd_toEndOf="@+id/infoAccount"
+        app:layout_constraintStart_toStartOf="@+id/infoAccount"
+        app:layout_constraintTop_toTopOf="@+id/infoAccount" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

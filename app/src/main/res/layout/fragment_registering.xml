@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Registering">
+
+
+
+    <ImageView
+        android:id="@+id/backRegistering"
+        android:layout_width="106dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+
+        <TextView
+            android:id="@+id/registerRegistering"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/mainTitleRegister"
+            android:textAlignment="center"
+            android:textColor="@color/dark_pink"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="164dp" />
+
+        <TextView
+            android:id="@+id/nameRegistering"
+            android:layout_width="@dimen/generalTitleWidth"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/name"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="80dp" />
+
+
+
+        <EditText
+            android:id="@+id/inputNameRegistering"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/name"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="122dp" />
+
+        <TextView
+            android:id="@+id/surnameRegistering"
+            android:layout_width="@dimen/generalTitleWidth"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/surname"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="164dp" />
+
+        <EditText
+            android:id="@+id/inputSurnameRegistering"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/surname"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="220dp" />
+
+        <TextView
+            android:id="@+id/mailRegistering"
+            android:layout_width="@dimen/generalTitleWidth"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/mail"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="260dp" />
+
+
+        <EditText
+            android:id="@+id/inputMailRegistering"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/mail"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="317dp" />
+
+        <TextView
+            android:id="@+id/passwordRegistering"
+            android:layout_width="@dimen/generalTitleWidth"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/password"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="374dp" />
+
+        <EditText
+            android:id="@+id/inputPasswordRegistering"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/password"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="434dp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/registerButtonRegistering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/register"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

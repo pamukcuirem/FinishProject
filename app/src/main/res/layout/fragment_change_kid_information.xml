@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChangeKidInformation">
+
+
+    <ImageView
+        android:id="@+id/backChangeKid"
+        android:layout_width="73dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/profileChangeKid"
+        android:layout_width="146dp"
+        android:layout_height="139dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backChangeKid" />
+
+    <ImageView
+        android:id="@+id/changeChangeKid"
+        android:layout_width="23dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="139dp"
+        android:src="@drawable/change"
+        app:layout_constraintBottom_toTopOf="@+id/profileChangeKid"
+        app:layout_constraintEnd_toEndOf="@+id/profileChangeKid"
+        app:layout_constraintStart_toStartOf="@+id/profileChangeKid"
+        app:layout_constraintTop_toTopOf="@+id/profileChangeKid" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileChangeKid"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/nameChangeKid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:paddingStart="5dp"
+            android:text="@string/name"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+        <EditText
+            android:id="@+id/inputNameChangeKid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/name"
+            android:inputType="text"
+            android:paddingStart="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="35dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+
+        <TextView
+            android:id="@+id/ageChangeKid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:paddingStart="5dp"
+            android:text="@string/age"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+        <EditText
+            android:id="@+id/inputAgeChangeKid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/age"
+            android:inputType="text"
+            android:paddingStart="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="35dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+        <TextView
+            android:id="@+id/genderChangeKid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:paddingStart="5dp"
+            android:text="@string/gender"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+        <EditText
+            android:id="@+id/inputGenderChangeKid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/gender"
+            android:inputType="text"
+            android:paddingStart="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="35dp"
+            tools:layout_editor_absoluteY="265dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/permissionChangeKid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/permission"
+                android:textSize="@dimen/generalTitleSize"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="265dp" />
+
+            <ImageView
+                android:id="@+id/permissionButtonChangeKid"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/permissionon" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/saveChange"
+        android:layout_width="157dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/intro">
+
+    <fragment
+        android:id="@+id/intro"
+        android:name="com.irempamukcu.deteppproject.Intro"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_intro_to_intro2"
+            app:destination="@id/intro2" />
+        <action
+            android:id="@+id/action_intro_to_user"
+            app:destination="@id/user" />
+    </fragment>
+    <fragment
+        android:id="@+id/intro2"
+        android:name="com.irempamukcu.deteppproject.Intro2"
+        android:label="fragment_intro2"
+        tools:layout="@layout/fragment_intro2" >
+        <action
+            android:id="@+id/action_intro2_to_start2"
+            app:destination="@id/start2" />
+    </fragment>
+    <fragment
+        android:id="@+id/start2"
+        android:name="com.irempamukcu.deteppproject.Start"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_start2_to_registering"
+            app:destination="@id/registering" />
+        <action
+            android:id="@+id/action_start2_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/registering"
+        android:name="com.irempamukcu.deteppproject.Registering"
+        android:label="fragment_registering"
+        tools:layout="@layout/fragment_registering" >
+        <action
+            android:id="@+id/action_registering_to_user"
+            app:destination="@id/user" />
+        <action
+            android:id="@+id/action_registering_to_start2"
+            app:destination="@id/start2" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.irempamukcu.deteppproject.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_user"
+            app:destination="@id/user" />
+        <action
+            android:id="@+id/action_login_to_start2"
+            app:destination="@id/start2" />
+    </fragment>
+    <fragment
+        android:id="@+id/user"
+        android:name="com.irempamukcu.deteppproject.User"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_user_to_addKid"
+            app:destination="@id/addKid" />
+        <action
+            android:id="@+id/action_user_to_loggedIn"
+            app:destination="@id/loggedIn" />
+        <action
+            android:id="@+id/action_user_to_account"
+            app:destination="@id/account" />
+        <action
+            android:id="@+id/action_user_to_changeKidInformation"
+            app:destination="@id/changeKidInformation" />
+        <action
+            android:id="@+id/action_user_self"
+            app:destination="@id/user" />
+    </fragment>
+    <fragment
+        android:id="@+id/addKid"
+        android:name="com.irempamukcu.deteppproject.AddKid"
+        android:label="fragment_add_kid"
+        tools:layout="@layout/fragment_add_kid" >
+        <action
+            android:id="@+id/action_addKid_to_changeProfilePicture"
+            app:destination="@id/changeProfilePicture" />
+        <action
+            android:id="@+id/action_addKid_to_user"
+            app:destination="@id/user" />
+        <argument
+            android:name="color"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeProfilePicture"
+        android:name="com.irempamukcu.deteppproject.ChangeProfilePicture"
+        android:label="fragment_change_profile_picture"
+        tools:layout="@layout/fragment_change_profile_picture" >
+        <action
+            android:id="@+id/action_changeProfilePicture_to_addKid"
+            app:destination="@id/addKid" />
+        <action
+            android:id="@+id/action_changeProfilePicture_to_changeKidInformation"
+            app:destination="@id/changeKidInformation" />
+        <argument
+            android:name="fragment_info"
+            app:argType="string" />
+        <argument
+            android:name="currentName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/loggedIn"
+        android:name="com.irempamukcu.deteppproject.LoggedIn"
+        android:label="fragment_logged_in"
+        tools:layout="@layout/fragment_logged_in" >
+        <action
+            android:id="@+id/action_loggedIn_to_video"
+            app:destination="@id/video" />
+        <action
+            android:id="@+id/action_loggedIn_to_user"
+            app:destination="@id/user" />
+        <argument
+            android:name="kidName"
+            app:argType="string" />
+        <argument
+            android:name="kidColor"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/account"
+        android:name="com.irempamukcu.deteppproject.Account"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_account_to_passwordForKidAnalyse"
+            app:destination="@id/passwordForKidAnalyse" />
+        <action
+            android:id="@+id/action_account_to_loggedIn"
+            app:destination="@id/loggedIn" />
+        <action
+            android:id="@+id/action_account_to_changeAccountInformation"
+            app:destination="@id/changeAccountInformation" />
+        <action
+            android:id="@+id/action_account_to_start22"
+            app:destination="@id/start2" />
+        <action
+            android:id="@+id/action_account_to_user"
+            app:destination="@id/user" />
+        <action
+            android:id="@+id/action_account_to_deleteAccountVerify"
+            app:destination="@id/deleteAccountVerify" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordForKidAnalyse"
+        android:name="com.irempamukcu.deteppproject.PasswordForKidAnalyse"
+        android:label="fragment_password_for_kid_analyse"
+        tools:layout="@layout/fragment_password_for_kid_analyse" >
+        <action
+            android:id="@+id/action_passwordForKidAnalyse_to_kidAnalyse"
+            app:destination="@id/kidAnalyse" />
+        <action
+            android:id="@+id/action_passwordForKidAnalyse_to_account"
+            app:destination="@id/account" />
+    </fragment>
+    <fragment
+        android:id="@+id/kidAnalyse"
+        android:name="com.irempamukcu.deteppproject.KidAnalyse"
+        android:label="fragment_kid_analyse"
+        tools:layout="@layout/fragment_kid_analyse" >
+        <action
+            android:id="@+id/action_kidAnalyse_to_account"
+            app:destination="@id/account" />
+    </fragment>
+    <fragment
+        android:id="@+id/video"
+        android:name="com.irempamukcu.deteppproject.Video"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" >
+        <action
+            android:id="@+id/action_video_to_loggedIn"
+            app:destination="@id/loggedIn" />
+        <argument
+            android:name="videoUrl"
+            app:argType="string" />
+        <argument
+            android:name="kidName"
+            app:argType="string" />
+        <argument
+            android:name="kidColor"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeAccountInformation"
+        android:name="com.irempamukcu.deteppproject.ChangeAccountInformation"
+        android:label="fragment_change_account_information"
+        tools:layout="@layout/fragment_change_account_information" >
+        <action
+            android:id="@+id/action_changeAccountInformation_to_account"
+            app:destination="@id/account" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeKidInformation"
+        android:name="com.irempamukcu.deteppproject.ChangeKidInformation"
+        android:label="fragment_change_kid_information"
+        tools:layout="@layout/fragment_change_kid_information" >
+        <action
+            android:id="@+id/action_changeKidInformation_to_changeProfilePicture"
+            app:destination="@id/changeProfilePicture" />
+        <action
+            android:id="@+id/action_changeKidInformation_to_user"
+            app:destination="@id/user" />
+        <argument
+            android:name="color"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/deleteAccountVerify"
+        android:name="com.irempamukcu.deteppproject.DeleteAccountVerify"
+        android:label="fragment_delete_account_verify"
+        tools:layout="@layout/fragment_delete_account_verify" >
+        <action
+            android:id="@+id/action_deleteAccountVerify_to_start2"
+            app:destination="@id/start2" />
+        <action
+            android:id="@+id/action_deleteAccountVerify_to_account"
+            app:destination="@id/account" />
+    </fragment>
+</navigation>

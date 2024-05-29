@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="welcomeTextSize">35sp</dimen>
+    <dimen name="welcomeBackgroundWidth">350dp</dimen>
+    <dimen name="welcomeBackgroundHeight">100dp</dimen>
+    <dimen name="generalTitleWidth">350dp</dimen>
+    <dimen name="generalTitleHeight">40dp</dimen>
+    <dimen name="generalTitleSize">30sp</dimen>
+    <dimen name="userPageTitleSize">37sp</dimen>
+    <dimen name="extraInfo">32sp</dimen>
+    <dimen name="videoTitleSize">28sp</dimen>
+</resources>

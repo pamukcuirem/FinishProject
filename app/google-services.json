@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "683731714484",
+    "project_id": "deteppproject",
+    "storage_bucket": "deteppproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683731714484:android:463093ef346f2ef2c1f2e1",
+        "android_client_info": {
+          "package_name": "com.irempamukcu.deteppproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzLcWhwAvedbV24WC-21eWhIRznE3LIak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

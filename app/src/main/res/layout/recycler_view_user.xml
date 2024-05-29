@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    android:background="@color/light_pink"
+>
+
+
+    <ImageView
+        android:id="@+id/profilePictureRecyclerViewUser"
+        android:layout_width="145dp"
+        android:layout_height="145dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewRecyclerViewUser"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84"
+        app:srcCompat="@drawable/blue" />
+
+
+    <TextView
+        android:id="@+id/textViewRecyclerViewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_margin="60dp"
+        android:text="ÖRNEK"
+        android:textSize="@dimen/userPageTitleSize"
+        android:textStyle="bold"
+        android:background="@color/light_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.832"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503" />
+
+    <ImageView
+        android:id="@+id/changeRecyclerViewUser"
+        android:layout_width="45dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/light_pink"
+        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintStart_toEndOf="@+id/textViewRecyclerViewUser"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/change" />
+
+    <ImageView
+        android:id="@+id/binRecyclerViewUser"
+        android:layout_width="43dp"
+        android:layout_height="52dp"
+        android:background="@color/light_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.804"
+        app:layout_constraintStart_toEndOf="@+id/textViewRecyclerViewUser"
+        app:layout_constraintTop_toBottomOf="@+id/changeRecyclerViewUser"
+        app:layout_constraintVertical_bias="0.734"
+        app:srcCompat="@drawable/bin" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

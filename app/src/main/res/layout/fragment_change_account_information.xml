@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChangeAccountInformation">
+
+    <ImageView
+        android:id="@+id/backChangeAccount"
+        android:layout_width="106dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/titleChangeAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/accountInfo"
+            android:textAlignment="center"
+            android:textColor="@color/dark_pink"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="164dp" />
+
+        <TextView
+            android:id="@+id/nameChangeAccount"
+            android:layout_width="@dimen/generalTitleWidth"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/name"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="80dp" />
+
+
+        <EditText
+            android:id="@+id/inputNameChangeAccount"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/name"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="122dp" />
+
+        <TextView
+            android:id="@+id/surnameChangeAccount"
+            android:layout_width="@dimen/generalTitleWidth"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/surname"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/welcomeTextSize"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="164dp" />
+
+        <EditText
+            android:id="@+id/inputSurnameChangeAccount"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalTitleHeight"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/surname"
+            android:paddingLeft="5dp"
+            android:textSize="@dimen/generalTitleSize"
+            android:textStyle="italic"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="220dp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/saveButtonChangeAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.928"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        app:layout_constraintVertical_bias="0.222" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
