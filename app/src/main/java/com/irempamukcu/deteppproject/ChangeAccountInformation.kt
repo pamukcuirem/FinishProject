@@ -1,8 +1,10 @@
 package com.irempamukcu.deteppproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -41,6 +43,7 @@ class ChangeAccountInformation : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,12 +55,28 @@ class ChangeAccountInformation : Fragment() {
             findNavController().navigate(action)
         }
 
-        saveButton.setOnClickListener {
-            val name = binding.inputNameChangeAccount.text.toString()
-            val surname = binding.inputSurnameChangeAccount.text.toString()
-            editInformation(name,surname)
+        saveButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
 
+                    saveButton.setImageResource(R.drawable.saveclick)
+                    val name = binding.inputNameChangeAccount.text.toString()
+                    val surname = binding.inputSurnameChangeAccount.text.toString()
+                    editInformation(name,surname)
+
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    saveButton.setImageResource(R.drawable.save)
+                    true
+                }
+                else -> false
+            }
         }
+
+
     }
 
     private fun showInformation() {

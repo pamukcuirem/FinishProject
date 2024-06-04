@@ -1,10 +1,12 @@
 package com.irempamukcu.deteppproject
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -25,7 +27,7 @@ class ChangeKidInformation : Fragment() {
     private var nameInfo = ""
     private var permission : Boolean = true
     private lateinit var kidInfo : Map<String,String>
-    private lateinit var currentPermission : String
+    private var currentPermission : String = "no"
     private lateinit var auth : FirebaseAuth
     private lateinit var firestore : FirebaseFirestore
 
@@ -54,6 +56,7 @@ class ChangeKidInformation : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -79,30 +82,47 @@ class ChangeKidInformation : Fragment() {
             findNavController().navigate(action)
         }
 
-        saveButton.setOnClickListener {
-            val name = nameInfo
-            val currentName = binding.inputNameChangeKid.text.toString()
-            val currentUser = auth.currentUser
-            val currentMail = currentUser?.email
-            val currentAge = binding.inputAgeChangeKid.text.toString()
-            val currentGender = binding.inputGenderChangeKid.text.toString()
+        saveButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
+
+                    saveButton.setImageResource(R.drawable.saveclick)
+
+                    val name = nameInfo
+                    val currentName = binding.inputNameChangeKid.text.toString()
+                    val currentUser = auth.currentUser
+                    val currentMail = currentUser?.email
+                    val currentAge = binding.inputAgeChangeKid.text.toString()
+                    val currentGender = binding.inputGenderChangeKid.text.toString()
 
 
 
-            kidInfo = mapOf(
-                "color" to colorInfo,
-                "kidAge" to currentAge,
-                "kidGender" to currentGender,
-                "kidName" to currentName,
-                "kidPermission" to currentPermission
+                    kidInfo = mapOf(
+                        "color" to colorInfo,
+                        "kidAge" to currentAge,
+                        "kidGender" to currentGender,
+                        "kidName" to currentName,
+                        "kidPermission" to currentPermission
 
-            )
+                    )
 
-            if(currentMail != null){
-                changeKidData(name,currentMail,kidInfo)
+                    if(currentMail != null){
+                        changeKidData(name,currentMail,kidInfo)
+                    }
+
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    saveButton.setImageResource(R.drawable.save)
+                    true
+                }
+                else -> false
             }
-
         }
+
+
     }
 
 
@@ -130,15 +150,24 @@ class ChangeKidInformation : Fragment() {
     }
 
     private fun permissionCheck(permission : Boolean){
-        if(permission){
-            this.permission = !permission
-            currentPermission = "no"
-            binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionoff)
+        val sharedPreferences = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val phonePermission = sharedPreferences.getString("phonePermission", "no")
+
+        if(phonePermission.equals("yes")){
+            if(permission){
+                this.permission = !permission
+                currentPermission = "no"
+                binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionoff)
+            }else{
+                this.permission = !permission
+                currentPermission = "yes"
+                binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionon)
+            }
         }else{
-            this.permission = !permission
-            currentPermission = "yes"
-            binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionon)
+            binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionoff)
+            Toast.makeText(requireContext(),"Kamera İzni Verilmelidir.",Toast.LENGTH_LONG).show()
         }
+
     }
 
     private fun getData(name : String){
@@ -164,15 +193,25 @@ class ChangeKidInformation : Fragment() {
 
                             binding.inputGenderChangeKid.setText(kidGender)
 
-                            if(kidPermission.equals("yes")){
-                                binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionon)
-                                permission = true
-                            }else if(kidPermission.equals("no")){
-                                binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionoff)
-                                permission = false
+                            val sharedPreferences = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+                            val phonePermission = sharedPreferences.getString("phonePermission", "no")
+
+                            if(phonePermission.equals("yes")){
+
+                                if(kidPermission.equals("yes")){
+                                    binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionon)
+                                    permission = true
+                                }else if(kidPermission.equals("no")){
+                                    binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionoff)
+                                    permission = false
+                                }else{
+                                    Toast.makeText(requireContext(),"Bir şeyler ters gitti. Bilgilere ulaşılamıyor.",Toast.LENGTH_LONG).show()
+                                }
                             }else{
-                                Toast.makeText(requireContext(),"Bir şeyler ters gitti. Bilgilere ulaşılamıyor.",Toast.LENGTH_LONG).show()
+                                binding.permissionButtonChangeKid.setImageResource(R.drawable.permissionoff)
+
                             }
+
 
                         }
 

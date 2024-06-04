@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginTop="20dp"
-    android:background="@color/light_pink"
+    android:background="@color/dark_blue"
 >
 
 
@@ -34,7 +34,7 @@
         android:text="ÖRNEK"
         android:textSize="@dimen/userPageTitleSize"
         android:textStyle="bold"
-        android:background="@color/light_pink"
+        android:background="@color/dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.832"
@@ -48,7 +48,7 @@
         android:layout_height="39dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/light_pink"
+        android:background="@color/dark_blue"
         app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toEndOf="@+id/textViewRecyclerViewUser"
         app:layout_constraintTop_toTopOf="parent"
@@ -58,7 +58,7 @@
         android:id="@+id/binRecyclerViewUser"
         android:layout_width="43dp"
         android:layout_height="52dp"
-        android:background="@color/light_pink"
+        android:background="@color/dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.804"

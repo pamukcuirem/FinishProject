@@ -1,10 +1,12 @@
 package com.irempamukcu.deteppproject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -41,6 +43,7 @@ class Account : Fragment() {
 
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -74,14 +77,44 @@ class Account : Fragment() {
             findNavController().navigate(action)
 
         }
-        contactButton.setOnClickListener {
-           goToGmail()
+
+        contactButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
+
+                    contactButton.setImageResource(R.drawable.contactusclick)
+                    goToGmail()
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    contactButton.setImageResource(R.drawable.contactus)
+                    true
+                }
+                else -> false
+            }
         }
 
-        deleteButton.setOnClickListener {
-            val action = AccountDirections.actionAccountToDeleteAccountVerify()
-            findNavController().navigate(action)
+        deleteButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
+
+                    deleteButton.setImageResource(R.drawable.deleteaccountclick)
+                    val action = AccountDirections.actionAccountToDeleteAccountVerify()
+                    findNavController().navigate(action)
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    deleteButton.setImageResource(R.drawable.deleteaccount)
+                    true
+                }
+                else -> false
+            }
         }
+
     }
 
     private fun showInformation(){

@@ -1,9 +1,11 @@
 package com.irempamukcu.deteppproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -39,6 +41,7 @@ class Registering : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,22 +55,37 @@ class Registering : Fragment() {
             findNavController().navigate(action)
         }
 
-        registerButton.setOnClickListener {
-            val name = binding.inputNameRegistering.text.toString()
-            val surname = binding.inputSurnameRegistering.text.toString()
-            val mail = binding.inputMailRegistering.text.toString()
-            val password = binding.inputPasswordRegistering.text.toString()
+        registerButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
 
-            if(name.isNotEmpty() && surname.isNotEmpty() && mail.isNotEmpty() && password.isNotEmpty()){
+                    registerButton.setImageResource(R.drawable.registerclick)
+                    val name = binding.inputNameRegistering.text.toString()
+                    val surname = binding.inputSurnameRegistering.text.toString()
+                    val mail = binding.inputMailRegistering.text.toString()
+                    val password = binding.inputPasswordRegistering.text.toString()
 
-                register(name, surname, mail, password)
+                    if(name.isNotEmpty() && surname.isNotEmpty() && mail.isNotEmpty() && password.isNotEmpty()){
+
+                        register(name, surname, mail, password)
 
 
-            }else{
-                Toast.makeText(requireContext(),"Bilgilerinizi kontrol edip tekrar deneyin.",Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(requireContext(),"Bilgilerinizi kontrol edip tekrar deneyin.",Toast.LENGTH_LONG).show()
+                    }
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    registerButton.setImageResource(R.drawable.register)
+                    true
+                }
+                else -> false
             }
-
         }
+
+
     }
 
 

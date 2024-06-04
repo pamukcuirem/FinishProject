@@ -7,6 +7,16 @@
     tools:context=".Video">
 
 
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.camera.view.PreviewView>
+
     <VideoView
         android:id="@+id/currentVideoVideo"
         android:layout_width="wrap_content"

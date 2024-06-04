@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
     android:layout_marginTop="15dp"
-    android:background="@color/light_pink">
+    android:background="@color/dark_blue">
 
     <ImageView
         android:id="@+id/imageRecyclerViewVideoContent"
@@ -22,7 +22,7 @@
         android:id="@+id/titleRecyclerViewVideoContent"
         android:layout_width="196dp"
         android:layout_height="102dp"
-        android:background="@color/light_pink"
+        android:background="@color/dark_blue"
         android:text="ÖRNEK"
         android:textSize="@dimen/videoTitleSize"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
         android:layout_height="42dp"
         android:layout_marginTop="9dp"
         android:text="örnek"
-        android:background="@color/light_pink"
+        android:background="@color/dark_blue"
         android:textColor="@color/light_gray"
         android:textSize="14sp"
         android:textStyle="italic"

@@ -1,24 +1,26 @@
 package com.irempamukcu.deteppproject
 
-import CameraSource
 import android.Manifest
+import android.content.Context
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.tasks.OnSuccessListener
+import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -27,8 +29,8 @@ import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.irempamukcu.deteppproject.databinding.FragmentVideoBinding
-import kotlinx.coroutines.launch
-import java.io.IOException
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class Video : Fragment() {
     private lateinit var binding: FragmentVideoBinding
@@ -39,24 +41,21 @@ class Video : Fragment() {
     private var kidName = ""
     private var kidColor = ""
     private var isPlaying = false
-    private var permissionGranted = true
-    private var kidPermission = ""
-    private var happyCount = 0
-    private var sadCount = 0
-   // private lateinit var cameraSource : CameraSource
-
-    //bura düşünülecek kafam karıştı
-
+    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
+    private lateinit var permissionFromFirebase: String
+    private lateinit var cameraExecutor: ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("VideoFragment", "onCreate called")
+
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
     }
 
     override fun onPause() {
         super.onPause()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        //cameraSource.stop()
     }
 
     override fun onResume() {
@@ -69,29 +68,19 @@ class Video : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("VideoFragment", "onCreateView called")
+
+        binding = FragmentVideoBinding.inflate(inflater, container, false)
+
         arguments?.let {
             videoUrl = VideoArgs.fromBundle(it).videoUrl
             kidName = VideoArgs.fromBundle(it).kidName
             kidColor = VideoArgs.fromBundle(it).kidColor
-             // Check permission argument
         }
 
-       // cameraSource = CameraSource(requireContext())
-        binding = FragmentVideoBinding.inflate(inflater, container, false)
+        cameraExecutor = Executors.newSingleThreadExecutor()
+
         return binding.root
     }
-
-    override fun onStop() {
-        super.onStop()
-        //cameraSource.stop()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-       // cameraSource.stop()
-    }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -101,15 +90,12 @@ class Video : Fragment() {
         val backButton = binding.imageBackVideo
         val notifyButton = binding.imageNotifyVideo
 
-        //loadKidPermission()
-
-        checkPermission(kidPermission)
-
-
         loadVideo(videoUrl)
 
-        if (permissionGranted) {
-            //setupCamera()
+        fetchKidPermission { permissionGranted ->
+            if (permissionGranted) {
+                requestCameraPermission()
+            }
         }
 
         videoView?.setOnClickListener {
@@ -128,7 +114,7 @@ class Video : Fragment() {
 
     private fun loadVideo(videoUrl: String) {
         Log.d("VideoFragment", "Loading video from URL: $videoUrl")
-        val storageReference = FirebaseStorage.getInstance().getReference("videos/$videoUrl")
+        val storageReference = storage.getReference("videos/$videoUrl")
 
         storageReference.downloadUrl.addOnSuccessListener { uri ->
             if (isAdded) {
@@ -162,7 +148,6 @@ class Video : Fragment() {
             videoView.setOnCompletionListener {
                 isPlaying = false
                 Log.d("VideoFragment", "Video playback completed")
-                //printEmotionResults()
             }
         } else {
             Log.e("VideoFragment", "VideoView is null")
@@ -177,96 +162,134 @@ class Video : Fragment() {
         notifyButton.visibility = if (notifyButton.visibility == View.GONE) View.VISIBLE else View.GONE
     }
 
-    /*
-        private fun setupCamera() {
-            val surfaceView = SurfaceView(requireContext())
-            binding.root.addView(surfaceView)
+    private fun fetchKidPermission(callback: (Boolean) -> Unit) {
+        val sharedPreferences = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val phonePermission = sharedPreferences.getString("phonePermission", "no")
 
-            val surfaceHolder = surfaceView.holder
-            surfaceHolder.addCallback(object : SurfaceHolder.Callback {
-                override fun surfaceCreated(holder: SurfaceHolder) {
-                    startCamera(holder)
-                }
+        val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
 
-                override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+        firestore.collection("kids")
+            .whereEqualTo("mail", currentMail)
+            .whereEqualTo("kidName", kidName)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    permissionFromFirebase = document.getString("kidPermission").toString()
                 }
+                callback(phonePermission == "yes" && permissionFromFirebase == "yes")
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Bir şeyler ters gitti", Toast.LENGTH_LONG).show()
+                callback(false)
+            }
+    }
 
-                override fun surfaceDestroyed(holder: SurfaceHolder) {
-                }
-            })
+    private fun addEmotion(emotion: String) {
+        val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
+
+        val emotionData = hashMapOf(
+            "emotion" to emotion,
+            "videoUrl" to videoUrl,
+            "kidName" to kidName,
+            "mail" to currentMail
+        )
+
+        firestore.collection("analyzes").document().set(emotionData).addOnSuccessListener {
+            println("Success")
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Duygu kaydı başarısız.", Toast.LENGTH_LONG).show()
         }
+    }
 
-        private fun startCamera(holder: SurfaceHolder) {
+    private fun requestCameraPermission() {
+        requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+    }
 
-            cameraSource.start(holder)
-
-            cameraSource.setFrameProcessor { frame ->
-                processFrame(frame)
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCamera()
+            } else {
+                Toast.makeText(requireContext(), "Camera permission is required", Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
-        private fun processFrame(frame: InputImage) {
-            val realTimeOpts = FaceDetectorOptions.Builder()
-                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+    private fun startCamera() {
+        Log.d(TAG, "Starting camera")
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+            }
+
+            val imageAnalyzer = ImageAnalysis.Builder()
                 .build()
-
-            val detector = FaceDetection.getClient(realTimeOpts)
-
-            detector.process(frame)
-                .addOnSuccessListener { faces ->
-                    for (face in faces) {
-                        analyzeFace(face)
-                    }
+                .also {
+                    it.setAnalyzer(cameraExecutor, { imageProxy ->
+                        detectFaces(imageProxy)
+                    })
                 }
-                .addOnFailureListener { e ->
-                    Log.e("VideoFragment", "Face detection failed", e)
-                }
-        }
 
-        private fun analyzeFace(face: Face) {
-            val smileProb = face.smilingProbability ?: 0.0f
-            val rightEyeOpenProb = face.rightEyeOpenProbability ?: 0.0f
-            val leftEyeOpenProb = face.leftEyeOpenProbability ?: 0.0f
+            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
 
-            // A basic heuristic for detecting happiness and sadness
-            val detectedEmotion = when {
-                smileProb > 0.3 && rightEyeOpenProb > 0.3 && leftEyeOpenProb > 0.3 -> "happy"
-                smileProb < 0.3 -> "sad"
-                else -> "neutral"
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
+                Log.d(TAG, "Camera started successfully")
+            } catch (exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
             }
 
-            when (detectedEmotion) {
-                "happy" -> happyCount++
-                "sad" -> sadCount++
-            }
+        }, ContextCompat.getMainExecutor(requireContext()))
+    }
 
-            Log.d("VideoFragment", "ton = binding.imageBackVideo
-            val notifyButton = binding.imageNotifyVideo
+    @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
+    private fun detectFaces(imageProxy: androidx.camera.core.ImageProxy) {
+        val mediaImage = imageProxy.image ?: return
+        val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
-            backButton.visibility = if (backButton.visibility == View.GONE) View.VISIBLE else View.GONE
-            notifyButton.visibility = if (notifyButton.visibility == View.GONE) View.VISIBLE else View.GONE
-        }
+        val options = FaceDetectorOptions.Builder()
+            .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+            .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_NONE)
+            .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
+            .build()
 
-        private fun loadKidPermission(){
-            val currentUser = auth.currentUser
-            val currentMail = currentUser?.email
-
-            firestore.collection("kids").whereEqualTo("mail",currentMail).whereEqualTo("kidName",kidName)
-                .get().addOnSuccessListener {documents->
-                    for(document in documents){
-                        kidPermission = document.getString("kidPermission") ?: ""
+        val detector = FaceDetection.getClient(options)
+        detector.process(image)
+            .addOnSuccessListener { faces ->
+                for (face in faces) {
+                    val smilingProbability = face.smilingProbability
+                    if (smilingProbability != null) {
+                        if (smilingProbability > 0.5) {
+                            addEmotion("happy")
+                        } else {
+                            addEmotion("sad")
+                        }
                     }
-
                 }
-        }
-    */
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Face detection failed", e)
+            }
+            .addOnCompleteListener {
+                imageProxy.close()
+            }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cameraExecutor.shutdown()
+    }
 
-    private fun checkPermission(kidPermission : String){
-        if(kidPermission.equals("yes")){
-            permissionGranted = true
-        }else if(kidPermission.equals("no")){
-            permissionGranted = false
-        }
+    companion object {
+        private const val REQUEST_CAMERA_PERMISSION = 1001
+        private const val TAG = "EmotionDetectionFragment"
     }
 }

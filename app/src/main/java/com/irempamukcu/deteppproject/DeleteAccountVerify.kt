@@ -59,13 +59,19 @@ class DeleteAccountVerify : Fragment() {
                 val currentMail = currentUser.email
 
                 if (currentMail != null) {
+                    deleteAnalyzes()
+                    deleteKids()
                     checkPassword(currentMail, passwordInput){
                         if(it){
+
                             deleteAccount()
+
                         }else{
                             Toast.makeText(requireContext(),"Bir şeyler ters gitti, İşlem başarısız.",Toast.LENGTH_LONG).show()
                         }
                     }
+
+
                 }
             }
         }
@@ -77,15 +83,16 @@ class DeleteAccountVerify : Fragment() {
 
 
         val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
 
 
         if(currentUser != null){
 
             val uid = currentUser.uid
-            val docRef = FirebaseFirestore.getInstance().collection("users").document(uid)
+            val userDoc = firestore.collection("users").document(uid)
 
 
-            docRef.delete().addOnSuccessListener {
+            userDoc.delete().addOnSuccessListener {
                 currentUser.delete().addOnSuccessListener {
                     val action = DeleteAccountVerifyDirections.actionDeleteAccountVerifyToStart2()
                     findNavController().navigate(action)
@@ -93,10 +100,56 @@ class DeleteAccountVerify : Fragment() {
                     Toast.makeText(requireContext(),"Veri Silme İşlemi Başarısız.", Toast.LENGTH_LONG).show()
                 }
 
+
             }
         }
     }
 
+    private fun deleteKids(){
+
+        val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
+
+        val kidDoc = firestore.collection("kids")
+
+        kidDoc.whereEqualTo("mail",currentMail).get().addOnSuccessListener {documents->
+            for(document in documents){
+                kidDoc.document(document.id).delete().addOnSuccessListener {
+
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(),"Çocuk bilgisi silme sorunu",Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+
+    }
+
+    private fun deleteAnalyzes(){
+        val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
+
+
+        val analyseDoc = firestore.collection("analyzes")
+
+
+
+        analyseDoc.whereEqualTo("mail",currentMail).get().addOnSuccessListener {documents->
+            for(document in documents){
+                if(document.exists()){
+                    analyseDoc.document(document.id).delete().addOnSuccessListener {
+
+                    }.addOnFailureListener {
+                        Toast.makeText(requireContext(),"Analiz silme hatası",Toast.LENGTH_LONG).show()
+                    }
+                }
+
+            }
+
+        }
+
+
+    }
     private fun checkPassword(mail: String, password: String, onComplete : (Boolean) -> Unit){
         auth.signInWithEmailAndPassword(mail,password).addOnSuccessListener {
             onComplete(true)

@@ -47,6 +47,7 @@ android {
 
 dependencies {
 
+    implementation(libs.firebase.ml.vision)
     val nav_version = "2.7.7"
 
     implementation(libs.androidx.core.ktx)
@@ -78,5 +79,9 @@ dependencies {
 
     // ML Kit face detection
     implementation ("com.google.mlkit:face-detection:16.0.3")
+
+    implementation ("androidx.core:core-ktx:1.8.0")
+
+    implementation ("androidx.fragment:fragment-ktx:1.5.0")
 
 }

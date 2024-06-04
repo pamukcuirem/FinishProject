@@ -2,7 +2,7 @@
     <string name="app_name">Detepp Project</string>
     <string name="welcome_text">Detepp çocuğunuzun gelişimini esas alır.</string>
     <string name="welcome_text2">Uzmanlarca çocuk yaşta keşfedilen ilgi alanlarının bireyin gelişimini etkilediği kanıtlanmıştır. </string>
-    <string name="welcome_title">BEN DETEPP! HOŞGELDİN...</string>
+    <string name="welcome_title">BEN DETEPP! HOŞ GELDİN...</string>
     <string name="login">GİRİŞ YAP</string>
     <string name="register">KAYIT OL</string>
     <string name="name">AD</string>
@@ -12,13 +12,13 @@
     <string name="newPassword">YENİ ŞİFRE</string>
     <string name="currentPassword">MEVCUT ŞİFRE</string>
     <string name="extraInformation1">BLAA BLAA BLAA BLAA BLAA BLAA</string>
-    <string name="permission">GÖRÜNTÜ İZNİ</string>
+    <string name="permission">ANALİZ</string>
     <string name="save">KAYDET</string>
     <string name="add">EKLE</string>
     <string name="gender">CİNSİYET</string>
     <string name="mainTitleRegister">KAYIT OL!</string>
     <string name="mainTitleLogin">GİRİŞ YAP!</string>
-    <string name="extraInformation2">something something</string>
+    <string name="extraInformation2">Detepp ile çocuğunuzun ilgi alanlarını keşfetmek için izinleri verdiğinizden emin olun.</string>
     <string name="extraInformation3">Detepp çocuğunuzun bilgilerini paylaşmaz.</string>
     <string name="contactToUs">Contact To Us</string>
     <string name="deleteAccount">Delete Account</string>

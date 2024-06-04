@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class KidAdapter(private val kidList: List<KidData>): RecyclerView.Adapter<KidAdapter.KidViewHolder>() {
+class KidAdapter(private val kidList: MutableList<Kid>): RecyclerView.Adapter<KidAdapter.KidViewHolder>() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var firestore: FirebaseFirestore

@@ -66,6 +66,7 @@ class LoggedIn : Fragment() {
         val goToUsers = binding.profilesLoggedin
         val backButton = binding.backLoggedin
 
+        setColor()
 
         goToUsers.setOnClickListener {
             val action = LoggedInDirections.actionLoggedInToUser()
@@ -122,6 +123,38 @@ class LoggedIn : Fragment() {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.loggedInRecyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.adapter = ContentAdapter(contentList,kidName,kidColor)
+    }
+
+    private fun setColor(){
+        when (kidColor) {
+            "blue" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.blue)
+            }
+            "red" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.red)
+            }
+            "green" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.green)
+            }
+            "yellow" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.yellow)
+            }
+            "darkGreen" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.darkgreen)
+            }
+            "purple" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.purple)
+            }
+            "pink" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.pink)
+            }
+            "orange" -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.orange)
+            }
+            else -> {
+                binding.profilesLoggedin.setImageResource(R.drawable.applogo)
+            }
+        }
     }
 
 }

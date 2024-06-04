@@ -1,10 +1,13 @@
 package com.irempamukcu.deteppproject
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -47,6 +50,7 @@ class AddKid : Fragment() {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkColor(colorInfo)
@@ -73,11 +77,25 @@ class AddKid : Fragment() {
             findNavController().navigate(action)
         }
 
-        saveButton.setOnClickListener {
 
-            saveData()
+        saveButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
 
+                    saveButton.setImageResource(R.drawable.saveclick)
+                    saveData()
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    saveButton.setImageResource(R.drawable.save)
+                    true
+                }
+                else -> false
+            }
         }
+
 
         backButton.setOnClickListener {
             val action = AddKidDirections.actionAddKidToUser()
@@ -109,15 +127,24 @@ class AddKid : Fragment() {
     }
 
     private fun permissionCheck(permission : Boolean){
-        if(permission){
-            this.permission = !permission
-            binding.permissionButtonAddKid.setImageResource(R.drawable.permissionoff)
-            println(permission)
+        val sharedPreferences = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val phonePermission = sharedPreferences.getString("phonePermission", "no")
+
+        if(phonePermission.equals("yes")){
+            if(permission){
+                this.permission = !permission
+                binding.permissionButtonAddKid.setImageResource(R.drawable.permissionoff)
+
+            }else{
+                this.permission = !permission
+                binding.permissionButtonAddKid.setImageResource(R.drawable.permissionon)
+
+            }
         }else{
-            this.permission = !permission
-            binding.permissionButtonAddKid.setImageResource(R.drawable.permissionon)
-            println(permission)
+            this.permission = false
+            binding.permissionButtonAddKid.setImageResource(R.drawable.permissionoff)
         }
+
     }
 
     private fun checkData() : Boolean{

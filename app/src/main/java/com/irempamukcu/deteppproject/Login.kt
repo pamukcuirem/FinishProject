@@ -1,8 +1,10 @@
 package com.irempamukcu.deteppproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -38,6 +40,7 @@ class Login : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,23 +54,36 @@ class Login : Fragment() {
             findNavController().navigate(action)
         }
 
-        loginButton.setOnClickListener {
+        loginButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Change the image resource when the ImageView is pressed
 
-            val mail = binding.inputMailLogin.text.toString()
-            val password = binding.inputPasswordLogin.text.toString()
+                    loginButton.setImageResource(R.drawable.loginclick)
+                    val mail = binding.inputMailLogin.text.toString()
+                    val password = binding.inputPasswordLogin.text.toString()
 
-            if(mail.isNotEmpty() && password.isNotEmpty()){
-                auth.signInWithEmailAndPassword(mail,password).addOnSuccessListener {
-                    val action = LoginDirections.actionLoginToUser()
-                    findNavController().navigate(action)
-                }.addOnFailureListener{
-                    Toast.makeText(requireContext(),"Yanlış e-posta ya da şifre. bilgilerinizi kontrol edip tekrar deneyin.",Toast.LENGTH_LONG).show()
+                    if(mail.isNotEmpty() && password.isNotEmpty()){
+                        auth.signInWithEmailAndPassword(mail,password).addOnSuccessListener {
+                            val action = LoginDirections.actionLoginToUser()
+                            findNavController().navigate(action)
+                        }.addOnFailureListener{
+                            Toast.makeText(requireContext(),"Yanlış e-posta ya da şifre. bilgilerinizi kontrol edip tekrar deneyin.",Toast.LENGTH_LONG).show()
+                        }
+                    }else{
+                        Toast.makeText(requireContext(),"Bir şeyler ters gitti. Gerekli alanları boş bırakmadığınızdan emin olun.",Toast.LENGTH_LONG).show()
+                    }
+                    true
                 }
-            }else{
-               Toast.makeText(requireContext(),"Bir şeyler ters gitti. Gerekli alanları boş bırakmadığınızdan emin olun.",Toast.LENGTH_LONG).show()
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    loginButton.setImageResource(R.drawable.login)
+                    true
+                }
+                else -> false
             }
-
         }
+
     }
 
 }

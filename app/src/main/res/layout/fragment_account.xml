@@ -57,11 +57,11 @@
     <TextView
         android:id="@+id/extraAccount"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@color/white"
         android:padding="20dp"
-        android:text="@string/extraInformation3"
+        android:text="@string/extraInformation2"
         android:textColor="@color/light_gray"
         android:textSize="@dimen/extraInfo"
         app:layout_constraintEnd_toEndOf="parent"
