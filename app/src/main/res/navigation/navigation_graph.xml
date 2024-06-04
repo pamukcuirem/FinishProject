@@ -12,10 +12,12 @@
         tools:layout="@layout/fragment_intro" >
         <action
             android:id="@+id/action_intro_to_intro2"
-            app:destination="@id/intro2" />
+            app:destination="@id/intro2"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_intro_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/intro2"
@@ -24,7 +26,8 @@
         tools:layout="@layout/fragment_intro2" >
         <action
             android:id="@+id/action_intro2_to_start2"
-            app:destination="@id/start2" />
+            app:destination="@id/start2"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/start2"
@@ -33,10 +36,12 @@
         tools:layout="@layout/fragment_start" >
         <action
             android:id="@+id/action_start2_to_registering"
-            app:destination="@id/registering" />
+            app:destination="@id/registering"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_start2_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/login"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/registering"
@@ -45,10 +50,12 @@
         tools:layout="@layout/fragment_registering" >
         <action
             android:id="@+id/action_registering_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_registering_to_start2"
-            app:destination="@id/start2" />
+            app:destination="@id/start2"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/login"
@@ -57,10 +64,12 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_login_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_login_to_start2"
-            app:destination="@id/start2" />
+            app:destination="@id/start2"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/user"
@@ -69,19 +78,24 @@
         tools:layout="@layout/fragment_user" >
         <action
             android:id="@+id/action_user_to_addKid"
-            app:destination="@id/addKid" />
+            app:destination="@id/addKid"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_user_to_loggedIn"
-            app:destination="@id/loggedIn" />
+            app:destination="@id/loggedIn"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_user_to_account"
-            app:destination="@id/account" />
+            app:destination="@id/account"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_user_to_changeKidInformation"
-            app:destination="@id/changeKidInformation" />
+            app:destination="@id/changeKidInformation"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_user_self"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/addKid"
@@ -90,10 +104,12 @@
         tools:layout="@layout/fragment_add_kid" >
         <action
             android:id="@+id/action_addKid_to_changeProfilePicture"
-            app:destination="@id/changeProfilePicture" />
+            app:destination="@id/changeProfilePicture"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_addKid_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
         <argument
             android:name="color"
             app:argType="string" />
@@ -105,10 +121,12 @@
         tools:layout="@layout/fragment_change_profile_picture" >
         <action
             android:id="@+id/action_changeProfilePicture_to_addKid"
-            app:destination="@id/addKid" />
+            app:destination="@id/addKid"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_changeProfilePicture_to_changeKidInformation"
-            app:destination="@id/changeKidInformation" />
+            app:destination="@id/changeKidInformation"
+            app:enterAnim="@android:anim/fade_in" />
         <argument
             android:name="fragment_info"
             app:argType="string" />
@@ -123,10 +141,12 @@
         tools:layout="@layout/fragment_logged_in" >
         <action
             android:id="@+id/action_loggedIn_to_video"
-            app:destination="@id/video" />
+            app:destination="@id/video"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_loggedIn_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
         <argument
             android:name="kidName"
             app:argType="string" />
@@ -141,22 +161,28 @@
         tools:layout="@layout/fragment_account" >
         <action
             android:id="@+id/action_account_to_passwordForKidAnalyse"
-            app:destination="@id/passwordForKidAnalyse" />
+            app:destination="@id/passwordForKidAnalyse"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_account_to_loggedIn"
-            app:destination="@id/loggedIn" />
+            app:destination="@id/loggedIn"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_account_to_changeAccountInformation"
-            app:destination="@id/changeAccountInformation" />
+            app:destination="@id/changeAccountInformation"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_account_to_start22"
-            app:destination="@id/start2" />
+            app:destination="@id/start2"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_account_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_account_to_deleteAccountVerify"
-            app:destination="@id/deleteAccountVerify" />
+            app:destination="@id/deleteAccountVerify"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/passwordForKidAnalyse"
@@ -165,10 +191,12 @@
         tools:layout="@layout/fragment_password_for_kid_analyse" >
         <action
             android:id="@+id/action_passwordForKidAnalyse_to_kidAnalyse"
-            app:destination="@id/kidAnalyse" />
+            app:destination="@id/kidAnalyse"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_passwordForKidAnalyse_to_account"
-            app:destination="@id/account" />
+            app:destination="@id/account"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/kidAnalyse"
@@ -177,7 +205,8 @@
         tools:layout="@layout/fragment_kid_analyse" >
         <action
             android:id="@+id/action_kidAnalyse_to_account"
-            app:destination="@id/account" />
+            app:destination="@id/account"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/video"
@@ -186,7 +215,8 @@
         tools:layout="@layout/fragment_video" >
         <action
             android:id="@+id/action_video_to_loggedIn"
-            app:destination="@id/loggedIn" />
+            app:destination="@id/loggedIn"
+            app:enterAnim="@android:anim/fade_in" />
         <argument
             android:name="videoUrl"
             app:argType="string" />
@@ -204,7 +234,8 @@
         tools:layout="@layout/fragment_change_account_information" >
         <action
             android:id="@+id/action_changeAccountInformation_to_account"
-            app:destination="@id/account" />
+            app:destination="@id/account"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/changeKidInformation"
@@ -213,10 +244,12 @@
         tools:layout="@layout/fragment_change_kid_information" >
         <action
             android:id="@+id/action_changeKidInformation_to_changeProfilePicture"
-            app:destination="@id/changeProfilePicture" />
+            app:destination="@id/changeProfilePicture"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_changeKidInformation_to_user"
-            app:destination="@id/user" />
+            app:destination="@id/user"
+            app:enterAnim="@android:anim/fade_in" />
         <argument
             android:name="color"
             app:argType="string" />
@@ -231,9 +264,11 @@
         tools:layout="@layout/fragment_delete_account_verify" >
         <action
             android:id="@+id/action_deleteAccountVerify_to_start2"
-            app:destination="@id/start2" />
+            app:destination="@id/start2"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_deleteAccountVerify_to_account"
-            app:destination="@id/account" />
+            app:destination="@id/account"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
 </navigation>
