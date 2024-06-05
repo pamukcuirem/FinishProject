@@ -108,7 +108,7 @@ class Video : Fragment() {
         }
 
         notifyButton?.setOnClickListener {
-            // notify function
+           saveVideoUrl()
         }
     }
 
@@ -291,5 +291,20 @@ class Video : Fragment() {
     companion object {
         private const val REQUEST_CAMERA_PERMISSION = 1001
         private const val TAG = "EmotionDetectionFragment"
+    }
+
+    private fun saveVideoUrl(){
+        val inputsCollection = firestore.collection("inputs")
+        val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
+
+        val videoData = hashMapOf(
+            "url" to videoUrl,
+            "mail" to currentMail
+        )
+
+        inputsCollection.document().set(videoData).addOnSuccessListener {
+            Toast.makeText(requireContext(),"Bu video ile ilgili bildiriminiz alındı.",Toast.LENGTH_LONG).show()
+        }
     }
 }

@@ -54,6 +54,7 @@ class Account : Fragment() {
         val contactButton = binding.contactAccount
         val deleteButton = binding.deleteAccount
 
+
         backButton.setOnClickListener {
             val action = AccountDirections.actionAccountToUser()
             findNavController().navigate(action)
@@ -77,6 +78,8 @@ class Account : Fragment() {
             findNavController().navigate(action)
 
         }
+
+
 
         contactButton.setOnTouchListener { v, event ->
             when (event.action) {
@@ -127,9 +130,9 @@ class Account : Fragment() {
 
             docRef.get().addOnSuccessListener {
                 if (it.exists()){
-                    val name = it.getString("name")
-                    val surname = it.getString("surname")
-                    val sonText = "Ad: $name \nSoyad: $surname "
+                    val name = it.getString("name")?.uppercase()
+                    val surname = it.getString("surname")?.uppercase()
+                    val sonText = "$name $surname"
                     binding.infoAccount.text= sonText
                 }else{
                     Toast.makeText(requireContext(),"Bilgilerinize ulaşılamadı.",Toast.LENGTH_LONG).show()

@@ -33,7 +33,7 @@ class Login : Fragment() {
         auth = Firebase.auth
 
 
-        val currentUser = auth.currentUser
+
 
 
         binding = FragmentLoginBinding.inflate(inflater,container,false)
@@ -46,6 +46,24 @@ class Login : Fragment() {
 
         val backButton = binding.backLogin
         val loginButton = binding.loginLogin
+        val resetButton = binding.resetPasswordLogin
+
+        resetButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    resetPassword()
+                    resetButton.setImageResource(R.drawable.resetpasswordclick)
+
+                    true
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    // Optionally, revert to the initial image when the press is released or cancelled
+                    resetButton.setImageResource(R.drawable.resetpassword)
+                    true
+                }
+                else -> false
+            }
+        }
 
 
 
@@ -84,6 +102,18 @@ class Login : Fragment() {
             }
         }
 
+    }
+
+    private fun resetPassword(){
+        val mail = binding.inputMailLogin.text.toString()
+
+        if(mail != null){
+            auth.sendPasswordResetEmail(mail).addOnSuccessListener {
+                Toast.makeText(requireContext(),"Sıfırlama emailiniz gönderildi. Lütfen işleme mail adresinizden devam ediniz.",Toast.LENGTH_LONG).show()
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(),"Mail göndermede bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.",Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
 }
