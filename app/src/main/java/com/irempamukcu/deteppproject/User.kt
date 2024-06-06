@@ -27,7 +27,7 @@ class User : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private var isCamera: Boolean = false
-
+    private var lastFragment = ""
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (isGranted) {
             // Save data to hide permission button or perform action that requires the permission
@@ -46,11 +46,15 @@ class User : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+
         auth = Firebase.auth
         firestore = Firebase.firestore
         binding = FragmentUserBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -95,6 +99,10 @@ class User : Fragment() {
 
         // Check for camera permissions
         checkSelfPerm()
+
+        if(lastFragment.equals("loggedin")){
+            restartFragment(User())
+        }
     }
 
 
@@ -105,7 +113,7 @@ class User : Fragment() {
     }
 
     // Check whether your app is running on a device that has a front-facing camera.
-   private fun isCameraExists() {
+    private fun isCameraExists() {
         if (requireContext().packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
             isCamera = true
         } else {
@@ -125,7 +133,7 @@ class User : Fragment() {
         }
     }
 
-  private fun savePermissionStatus(granted: Boolean) {
+    private fun savePermissionStatus(granted: Boolean) {
         val sharedPreferences = requireContext().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putString("phonePermission", if (granted) "yes" else "no")
@@ -133,7 +141,7 @@ class User : Fragment() {
         }
     }
 
- override fun onRequestPermissionsResult(
+    override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
@@ -141,4 +149,26 @@ class User : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Handle other permissions if needed
     }
+
+
+    private fun Fragment.restartFragment(fragment: Fragment) {
+        val fragmentManager = parentFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        // Get the tag of the fragment
+        val tag = fragment.tag
+
+        // Remove the fragment
+        fragmentTransaction.remove(fragment)
+        fragmentTransaction.commit()
+
+        // This is needed to complete the transaction before adding the fragment again
+        fragmentManager.executePendingTransactions()
+
+        // Add the fragment back
+        fragmentTransaction.add(R.id.fragmentContainerView, fragment, tag)
+        fragmentTransaction.commit()
+    }
+
+
 }

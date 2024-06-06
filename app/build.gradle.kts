@@ -84,4 +84,10 @@ dependencies {
 
     implementation ("androidx.fragment:fragment-ktx:1.5.0")
 
+    implementation ("androidx.work:work-runtime-ktx:2.7.1")
+
+    implementation ("com.google.android.exoplayer:exoplayer:2.15.1")
+
+
+
 }

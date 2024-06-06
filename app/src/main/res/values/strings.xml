@@ -2,7 +2,8 @@
     <string name="app_name">Detepp Project</string>
     <string name="welcome_text">Detepp çocuğunuzun gelişimini esas alır.</string>
     <string name="welcome_text2">Uzmanlarca çocuk yaşta keşfedilen ilgi alanlarının bireyin gelişimini etkilediği kanıtlanmıştır. </string>
-    <string name="welcome_title">BEN DETEPP! HOŞ GELDİN...</string>
+    <string name="welcome_title">BEN DETEPP!
+        HOŞ GELDİN…</string>
     <string name="login">GİRİŞ YAP</string>
     <string name="register">KAYIT OL</string>
     <string name="name">AD</string>

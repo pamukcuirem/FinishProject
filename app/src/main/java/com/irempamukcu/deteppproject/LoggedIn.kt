@@ -64,7 +64,7 @@ class LoggedIn : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val goToUsers = binding.profilesLoggedin
-        val backButton = binding.backLoggedin
+
 
         setColor()
 
@@ -74,10 +74,6 @@ class LoggedIn : Fragment() {
 
         }
 
-        backButton.setOnClickListener {
-            val action = LoggedInDirections.actionLoggedInToUser()
-            findNavController().navigate(action)
-        }
     }
 
     private fun getData(){
@@ -156,5 +152,8 @@ class LoggedIn : Fragment() {
             }
         }
     }
+
+
+
 
 }

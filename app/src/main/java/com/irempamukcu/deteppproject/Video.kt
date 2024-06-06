@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
@@ -25,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.irempamukcu.deteppproject.databinding.FragmentVideoBinding
@@ -61,7 +59,21 @@ class Video : Fragment() {
     override fun onResume() {
         super.onResume()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        // Check if videoUrl is not empty before attempting to reload the video
+        if (videoUrl.isNotEmpty()) {
+            loadVideo(videoUrl)
+        }
     }
+
+    override fun onDestroy() {
+
+        super.onDestroy()
+
+        binding.currentVideoVideo.stopPlayback()
+        binding.currentVideoVideo.suspend() // Optional: Release the MediaPlayer resource
+        cameraExecutor.shutdown()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -93,7 +105,7 @@ class Video : Fragment() {
         loadVideo(videoUrl)
 
         fetchKidPermission { permissionGranted ->
-            if (permissionGranted) {
+            if (permissionGranted && isAdded) {  // Check if the fragment is still attached
                 requestCameraPermission()
             }
         }
@@ -108,7 +120,7 @@ class Video : Fragment() {
         }
 
         notifyButton?.setOnClickListener {
-           saveVideoUrl()
+            saveVideoUrl()
         }
     }
 
@@ -204,7 +216,11 @@ class Video : Fragment() {
     }
 
     private fun requestCameraPermission() {
-        requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        if (isAdded) {  // Ensure the fragment is attached
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        } else {
+            Log.e(TAG, "Fragment not attached, cannot request permissions")
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -257,7 +273,7 @@ class Video : Fragment() {
 
         val options = FaceDetectorOptions.Builder()
             .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
-            .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_NONE)
+            .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
             .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
             .build()
 
@@ -307,4 +323,7 @@ class Video : Fragment() {
             Toast.makeText(requireContext(),"Bu video ile ilgili bildiriminiz alındı.",Toast.LENGTH_LONG).show()
         }
     }
+
+
+
 }

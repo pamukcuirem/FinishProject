@@ -8,22 +8,14 @@
 
 
     <ImageView
-        android:id="@+id/backLoggedin"
-        android:layout_width="112dp"
-        android:layout_height="82dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@+id/profilesLoggedin"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
         android:id="@+id/profilesLoggedin"
         android:layout_width="119dp"
         android:layout_height="92dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:src="@drawable/orange"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView

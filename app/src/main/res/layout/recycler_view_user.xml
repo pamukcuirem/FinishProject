@@ -8,6 +8,8 @@
     android:orientation="horizontal"
     android:layout_marginTop="20dp"
     android:background="@color/dark_blue"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
 >
 
 
