@@ -77,7 +77,7 @@ dependencies {
     implementation ("androidx.camera:camera-lifecycle:1.1.0-beta01")
     implementation ("androidx.camera:camera-view:1.0.0-alpha28")
 
-    // ML Kit face detection
+
     implementation ("com.google.mlkit:face-detection:16.0.3")
 
     implementation ("androidx.core:core-ktx:1.8.0")
@@ -86,7 +86,7 @@ dependencies {
 
     implementation ("androidx.work:work-runtime-ktx:2.7.1")
 
-    implementation ("com.google.android.exoplayer:exoplayer:2.15.1")
+
 
 
 
