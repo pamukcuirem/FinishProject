@@ -86,7 +86,7 @@ class KidAnalyse : Fragment() {
 
         val kidNames = kidsWithPermission.mapNotNull { it.getString("kidName") }
 
-        val analyzeCollection = firestore.collection("analyzes")
+        val analyzeCollection = firestore.collection("kidAnalyzes")
         val videosCollection = firestore.collection("videos")
 
         if (kidNames.isNotEmpty()) {

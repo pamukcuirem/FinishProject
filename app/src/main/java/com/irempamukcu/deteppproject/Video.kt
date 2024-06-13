@@ -12,9 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.Preview
+import androidx.annotation.OptIn
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,7 +30,8 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class Video : Fragment() {
-    private lateinit var binding: FragmentVideoBinding
+    private var _binding: FragmentVideoBinding? = null
+    private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
@@ -40,56 +40,59 @@ class Video : Fragment() {
     private var kidColor = ""
     private var isPlaying = false
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
-    private lateinit var permissionFromFirebase: String
+    private var permissionFromFirebase: String = ""
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+        cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     override fun onPause() {
         super.onPause()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        stopCamera()
     }
 
     override fun onResume() {
         super.onResume()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        // Check if videoUrl is not empty before attempting to reload the video
         if (videoUrl.isNotEmpty()) {
             loadVideo(videoUrl)
+        }
+        fetchKidPermission { permissionGranted ->
+            if (permissionGranted && isAdded) {
+                requestCameraPermission()
+            }
         }
     }
 
     override fun onDestroy() {
-
         super.onDestroy()
-
-        binding.currentVideoVideo.stopPlayback()
-        binding.currentVideoVideo.suspend() // Optional: Release the MediaPlayer resource
-        cameraExecutor.shutdown()
+        if (_binding != null) {
+            binding.currentVideoVideo.stopPlayback()
+            binding.currentVideoVideo.suspend() // Optional: Release the MediaPlayer resource
+        }
+        if (::cameraExecutor.isInitialized) {
+            cameraExecutor.shutdown()
+        }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         Log.d("VideoFragment", "onCreateView called")
-
-        binding = FragmentVideoBinding.inflate(inflater, container, false)
+        _binding = FragmentVideoBinding.inflate(inflater, container, false)
 
         arguments?.let {
             videoUrl = VideoArgs.fromBundle(it).videoUrl
             kidName = VideoArgs.fromBundle(it).kidName
             kidColor = VideoArgs.fromBundle(it).kidColor
         }
-
-        cameraExecutor = Executors.newSingleThreadExecutor()
 
         return binding.root
     }
@@ -101,14 +104,6 @@ class Video : Fragment() {
         val videoView = binding.currentVideoVideo
         val backButton = binding.imageBackVideo
         val notifyButton = binding.imageNotifyVideo
-
-        loadVideo(videoUrl)
-
-        fetchKidPermission { permissionGranted ->
-            if (permissionGranted && isAdded) {  // Check if the fragment is still attached
-                requestCameraPermission()
-            }
-        }
 
         videoView?.setOnClickListener {
             toggleControlsVisibility()
@@ -216,7 +211,7 @@ class Video : Fragment() {
     }
 
     private fun requestCameraPermission() {
-        if (isAdded) {  // Ensure the fragment is attached
+        if (isAdded) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
         } else {
             Log.e(TAG, "Fragment not attached, cannot request permissions")
@@ -236,13 +231,14 @@ class Video : Fragment() {
         }
     }
 
+    @OptIn(ExperimentalGetImage::class)
     private fun startCamera() {
         Log.d(TAG, "Starting camera")
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                it.setSurfaceProvider(binding?.viewFinder?.surfaceProvider)
             }
 
             val imageAnalyzer = ImageAnalysis.Builder()
@@ -266,8 +262,14 @@ class Video : Fragment() {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
-    private fun detectFaces(imageProxy: androidx.camera.core.ImageProxy) {
+    private fun stopCamera() {
+        if (::cameraProviderFuture.isInitialized) {
+            cameraProviderFuture.get().unbindAll()
+        }
+    }
+
+    @androidx.camera.core.ExperimentalGetImage
+    private fun detectFaces(imageProxy: ImageProxy) {
         val mediaImage = imageProxy.image ?: return
         val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
@@ -301,15 +303,10 @@ class Video : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        cameraExecutor.shutdown()
+        _binding = null
     }
 
-    companion object {
-        private const val REQUEST_CAMERA_PERMISSION = 1001
-        private const val TAG = "EmotionDetectionFragment"
-    }
-
-    private fun saveVideoUrl(){
+    private fun saveVideoUrl() {
         val inputsCollection = firestore.collection("inputs")
         val currentUser = auth.currentUser
         val currentMail = currentUser?.email
@@ -320,10 +317,12 @@ class Video : Fragment() {
         )
 
         inputsCollection.document().set(videoData).addOnSuccessListener {
-            Toast.makeText(requireContext(),"Bu video ile ilgili bildiriminiz alındı.",Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Bu video ile ilgili bildiriminiz alındı.", Toast.LENGTH_LONG).show()
         }
     }
 
-
-
+    companion object {
+        private const val REQUEST_CAMERA_PERMISSION = 1001
+        private const val TAG = "VideoFragment"
+    }
 }

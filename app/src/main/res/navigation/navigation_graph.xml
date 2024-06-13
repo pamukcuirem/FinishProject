@@ -164,10 +164,6 @@
             app:destination="@id/passwordForKidAnalyse"
             app:enterAnim="@android:anim/fade_in" />
         <action
-            android:id="@+id/action_account_to_loggedIn"
-            app:destination="@id/loggedIn"
-            app:enterAnim="@android:anim/fade_in" />
-        <action
             android:id="@+id/action_account_to_changeAccountInformation"
             app:destination="@id/changeAccountInformation"
             app:enterAnim="@android:anim/fade_in" />

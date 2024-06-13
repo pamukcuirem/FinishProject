@@ -41,7 +41,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/mainTitleRegister"
+            android:text="@string/register"
             android:textAlignment="center"
             android:textColor="@color/dark_pink"
             android:textSize="@dimen/welcomeTextSize"

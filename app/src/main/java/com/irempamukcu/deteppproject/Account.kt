@@ -15,6 +15,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.irempamukcu.deteppproject.databinding.FragmentAccountBinding
 
 
@@ -22,6 +23,7 @@ class Account : Fragment() {
 
     private lateinit var binding : FragmentAccountBinding
     private lateinit var auth : FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,7 @@ class Account : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         auth = Firebase.auth
-
+        firestore = Firebase.firestore
         showInformation()
 
         binding = FragmentAccountBinding.inflate(inflater,container,false)
@@ -53,6 +55,10 @@ class Account : Fragment() {
         val changeButton = binding.changeAccount
         val contactButton = binding.contactAccount
         val deleteButton = binding.deleteAccount
+
+        val mostDetectedFace = MostDetectedFace(firestore)
+
+        mostDetectedFace.analyzeEmotions()
 
 
         backButton.setOnClickListener {
