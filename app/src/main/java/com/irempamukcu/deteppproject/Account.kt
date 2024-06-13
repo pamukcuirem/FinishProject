@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -149,21 +150,27 @@ class Account : Fragment() {
         }
     }
 
+
     private fun goToGmail(){
-        val emailIntent = Intent(Intent.ACTION_SENDTO).apply{
-            data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("irempamukcu21@gmail.com"))
-            putExtra(Intent.EXTRA_SUBJECT,"Detepp Contact")
+        val currentUser = auth.currentUser
+        val currentMail = currentUser?.email
+        val emailData = hashMapOf(
+            "email" to currentMail
+        )
 
-        }
-
-
-        if(emailIntent.resolveActivity(requireActivity().packageManager) != null){
-            startActivity(emailIntent)
-        }else{
-            println("mail yok")
-        }
+        firestore.collection("mailInput")
+            .add(emailData)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Size kısa süre içinde mail göndereceğiz", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Mail hatası", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
     }
 
 
     }
+
+
+
